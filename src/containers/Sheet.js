@@ -6,7 +6,8 @@ class Sheet extends React.Component {
     start: false,
     score: 0,
     questions: ["1 + 1 =", "5 + 5 =", "2 + 8 ="],
-    done: false
+    done: false,
+    timeLeft: 0
   };
 
   renderQuestions = () => {
@@ -15,16 +16,16 @@ class Sheet extends React.Component {
     });
   };
 
-  submitHandler = (e, state) => {
-    e.preventDefault();
-    console.log(state);
+  timeOutHandler = state => {
+    delete state.timer;
     let inputs = Object.values(state);
     let newScore = 0;
 
     if (inputs.length === 0) {
       this.setState({
         start: false,
-        done: true
+        done: true,
+        timeLeft: 0
       });
     }
 
@@ -42,7 +43,43 @@ class Sheet extends React.Component {
       this.setState({
         start: false,
         done: true,
-        score: newScore
+        score: newScore,
+        timeLeft: 0
+      });
+    }
+  };
+
+  submitHandler = (e, state) => {
+    e.preventDefault();
+    let timeLeft = state.timer;
+    delete state.timer;
+    let inputs = Object.values(state);
+    let newScore = 0;
+
+    if (inputs.length === 0) {
+      this.setState({
+        start: false,
+        done: true,
+        timeLeft: timeLeft
+      });
+    }
+
+    if (inputs.length > 0) {
+      let numbers = inputs[0].split(/[\s+=]+/);
+      inputs.forEach(numberSentence => {
+        let numbers = numberSentence.split(/[\s+=]+/);
+        if (
+          parseInt(numbers[0]) + parseInt(numbers[1]) ===
+          parseInt(numbers[2])
+        ) {
+          newScore += 1;
+        }
+      });
+      this.setState({
+        start: false,
+        done: true,
+        score: newScore,
+        timeLeft: timeLeft
       });
     }
   };
@@ -78,9 +115,13 @@ class Sheet extends React.Component {
           <NumberSentence
             questions={questionBank}
             submitHandler={this.submitHandler}
+            timeOutHandler={this.timeOutHandler}
           />
         ) : (
-          <h2>Correct: {this.state.score} </h2>
+          <h2>
+            Correct: {this.state.score} <br />
+            Time Left: {this.state.timeLeft}
+          </h2>
         )}
       </div>
     );
