@@ -20,6 +20,14 @@ class Sheet extends React.Component {
     let inputs = Object.values(state);
     let newScore = 0;
 
+    if (numbers === undefined) {
+      this.setState({
+        start: false,
+        done: true
+      });
+      return null;
+    }
+
     let numbers = inputs[0].split(/[\s+=]+/);
     inputs.forEach(numberSentence => {
       let numbers = numberSentence.split(/[\s+=]+/);
@@ -53,14 +61,7 @@ class Sheet extends React.Component {
       <div className="homePage">
         <h1>No Hesitation</h1>
 
-        {this.state.done ? <h1> {this.state.score} </h1> : null}
-
-        {this.state.start && !this.state.done ? (
-          <NumberSentence
-            questions={questionBank}
-            submitHandler={this.submitHandler}
-          />
-        ) : (
+        {!this.state.start && !this.state.done ? (
           <div>
             <p>
               No Hesitation Math is a way for students to paractice their math
@@ -72,6 +73,13 @@ class Sheet extends React.Component {
               Start
             </button>
           </div>
+        ) : this.state.start && !this.state.done ? (
+          <NumberSentence
+            questions={questionBank}
+            submitHandler={this.submitHandler}
+          />
+        ) : (
+          <h2>Correct: {this.state.score} </h2>
         )}
       </div>
     );
