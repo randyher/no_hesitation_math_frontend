@@ -17,33 +17,34 @@ class Sheet extends React.Component {
 
   submitHandler = (e, state) => {
     e.preventDefault();
+    console.log(state);
     let inputs = Object.values(state);
     let newScore = 0;
 
-    if (numbers === undefined) {
+    if (inputs.length === 0) {
       this.setState({
         start: false,
         done: true
       });
-      return null;
     }
 
-    let numbers = inputs[0].split(/[\s+=]+/);
-    inputs.forEach(numberSentence => {
-      let numbers = numberSentence.split(/[\s+=]+/);
-      if (
-        parseInt(numbers[0]) + parseInt(numbers[1]) ===
-        parseInt(numbers[2])
-      ) {
-        newScore += 1;
-      }
-    });
-    this.setState({
-      start: false,
-      done: true,
-      score: newScore
-    });
-    console.log(this.state.score);
+    if (inputs.length > 0) {
+      let numbers = inputs[0].split(/[\s+=]+/);
+      inputs.forEach(numberSentence => {
+        let numbers = numberSentence.split(/[\s+=]+/);
+        if (
+          parseInt(numbers[0]) + parseInt(numbers[1]) ===
+          parseInt(numbers[2])
+        ) {
+          newScore += 1;
+        }
+      });
+      this.setState({
+        start: false,
+        done: true,
+        score: newScore
+      });
+    }
   };
 
   render() {

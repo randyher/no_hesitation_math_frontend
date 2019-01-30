@@ -2,6 +2,18 @@ import React from "react";
 
 class NumberSentence extends React.Component {
   state = {};
+  //
+  // componentDidMount() {
+  //   this.myInterval = setInterval(() => {
+  //     //
+  //     if (this.state.timer === 0) {
+  //     }
+  //     //
+  //     this.setState(prevState => ({
+  //       timer: prevState.timer - 1
+  //     }));
+  //   }, 1000);
+  // }
 
   changeHandler = e => {
     let numberSentence = e.target.name + " " + e.target.value;
@@ -36,6 +48,7 @@ class NumberSentence extends React.Component {
   render() {
     return (
       <div>
+        <h4>{this.state.timer}</h4>
         <form onSubmit={e => this.props.submitHandler(e, this.state)}>
           {this.renderQuestions()}
           <input type="submit" value="Submit" />
