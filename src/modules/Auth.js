@@ -7,7 +7,7 @@ class Auth {
     return sessionStorage.getItem("token") !== null;
   }
 
-  static deauthenticateUser() {
+  static deauthenticateToken() {
     sessionStorage.removeItem("token");
   }
 

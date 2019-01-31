@@ -1,16 +1,21 @@
 import React from "react";
 import GameCard from "../components/GameCard";
 
-const GameContainer = props => {
-  const allGames = props.games.map(game => {
-    return <GameCard game={game} />;
-  });
+class GameContainer extends React.Component {
+  render() {
+    const allGames = this.props.games.map(game => {
+      return <GameCard key={game.id} game={game} />;
+    });
 
-  return (
-    <div>
-      <h1>{allGames}</h1>
-    </div>
-  );
-};
+    return (
+      <div>
+        <br />
+        <h1>Welcome {this.props.username}!</h1>
+        <br />
+        <div className="ui link cards">{allGames}</div>
+      </div>
+    );
+  }
+}
 
 export default GameContainer;

@@ -5,7 +5,22 @@ class Sheet extends React.Component {
   state = {
     start: false,
     score: 0,
-    questions: ["1 + 1 =", "5 + 5 =", "2 + 8 ="],
+    questions: [
+      "2 + 8 =",
+      "3 + 9 =",
+      "3 + 8 =",
+      "4 + 9 =",
+      "5 + 5 =",
+      "5 + 3 =",
+      "6 + 4 =",
+      "7 + 7 =",
+      "7 + 6 =",
+      "7 + 4 =",
+      "8 + 8 =",
+      "8 + 9 =",
+      "9 + 6 =",
+      "9 + 4 ="
+    ],
     done: false,
     timeLeft: 0
   };
@@ -97,16 +112,21 @@ class Sheet extends React.Component {
     }
     return (
       <div className="homePage">
+        <br />
         <h1>No Hesitation</h1>
 
         {!this.state.start && !this.state.done ? (
           <div>
-            <p>
-              No Hesitation Math is a way for students to paractice their math
-              facts, testing them on speed and precision. When you click start,
-              a one minute timer will begin and you will be expect to complete
-              all the math facts!
-            </p>
+            <br />
+            <div>
+              <p className="info">
+                No Hesitation Math is a way for students to paractice their math
+                facts, testing them on speed and precision. When you click
+                start, a one minute timer will begin and you will be expect to
+                complete all of the number sentences!
+              </p>
+            </div>
+            <br />
             <button className="button" onClick={this.renderQuestions}>
               Start
             </button>
@@ -119,7 +139,7 @@ class Sheet extends React.Component {
           />
         ) : (
           <h2>
-            Correct: {this.state.score} <br />
+            Correct: {this.state.score}/24 <br />
             Time Left: {this.state.timeLeft}
           </h2>
         )}

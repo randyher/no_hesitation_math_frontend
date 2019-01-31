@@ -20,25 +20,28 @@ import {
 class App extends Component {
   state = {
     auth: Auth.isUserAuthenticated(),
-    users: [],
+    username: "",
     games: []
   };
 
   componentDidMount() {
-    // fetch("http://localhost:3000/api/v1/users")
-    //   .then(res => res.json())
-    //   .then(users => {
-    //     this.setState({
-    //       users: users
-    //     });
-    //   });
-    // fetch("http://localhost:3000/api/v1/games")
-    //   .then(res => res.json())
-    //   .then(games => {
-    //     this.setState({
-    //       games: games
-    //     });
-    //   });
+    if (this.state.auth == true) {
+      fetch("http://localhost:3000/api/v1/profile", {
+        method: "GET",
+        headers: {
+          token: Auth.getToken(),
+          Authorization: `Token ${Auth.getToken()}`
+        }
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          this.setState({
+            username: res.user.username,
+            games: res.games
+          });
+        });
+    }
   }
 
   handleRegisterSubmit = (e, info) => {
@@ -66,21 +69,37 @@ class App extends Component {
     e.preventDefault();
     console.log(info);
 
-    fetch(`http://localhost:3000/api/v1/login/`, {
+    fetch(`http://localhost:3000/api/v1/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ info })
+      body: JSON.stringify(info)
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         Auth.authenticateToken(res.token);
         this.setState({
           auth: Auth.isUserAuthenticated()
         });
-        //ErrorCatch-- later!
+      })
+      .catch(err => console.log(err));
+  };
+
+  handleLogOut = () => {
+    console.log("Out");
+    fetch(`http://localhost:3000/api/v1/logout`, {
+      method: "DELETE",
+      headers: {
+        token: Auth.getToken(),
+        Authorization: `Token ${Auth.getToken()}`
+      }
+    })
+      .then(res => {
+        Auth.deauthenticateToken();
+        this.setState({
+          auth: Auth.isUserAuthenticated()
+        });
       })
       .catch(err => console.log(err));
   };
@@ -88,29 +107,46 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar auth={this.state.auth} logOut={this.handleLogOut} />
 
         {/*Under the Nav Bar*/}
         <Switch>
           <Route
             path="/login"
-            render={() => <LogIn handleSubmit={this.handleLoginSubmit} />}
+            render={() =>
+              this.state.auth ? (
+                <Redirect to="/" />
+              ) : (
+                <LogIn handleSubmit={this.handleLoginSubmit} />
+              )
+            }
           />
           <Route
             path="/signup"
-            render={() => <SignUp handleSubmit={this.handleRegisterSubmit} />}
+            render={() =>
+              this.state.auth ? (
+                <Redirect to="/" />
+              ) : (
+                <SignUp handleSubmit={this.handleRegisterSubmit} />
+              )
+            }
           />
           <Route path="/start" render={() => <Sheet />} />
           {/*The Auth-options above*/}
           <Route
             path="/profile"
-            render={() => {
-              return (
+            render={() =>
+              this.state.auth ? (
                 <div>
-                  <GameContainer games={this.state.games} />
+                  <GameContainer
+                    username={this.state.username}
+                    games={this.state.games}
+                  />
                 </div>
-              );
-            }}
+              ) : (
+                <Redirect to="/" />
+              )
+            }
           />
 
           {/*Home Page is Under*/}

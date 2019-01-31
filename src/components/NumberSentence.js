@@ -51,9 +51,10 @@ class NumberSentence extends React.Component {
   render() {
     return (
       <div>
-        <h4>{this.state.timer}</h4>
+        <h1>{this.state.timer}</h1>
         <form onSubmit={e => this.props.submitHandler(e, this.state)}>
           <div className="row">{this.renderQuestions()}</div>
+          <br />
           <input type="submit" value="Submit" />
         </form>
       </div>

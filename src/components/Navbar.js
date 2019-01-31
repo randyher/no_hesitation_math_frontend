@@ -29,22 +29,35 @@ export default class Navbar extends React.Component {
                   Start
                 </a>
               </li>
-
-              <li className="nav-item active">
-                <a className="nav-link" href="/profile">
-                  Profile
-                </a>
-              </li>
+              {this.props.auth ? (
+                <li className="nav-item active">
+                  <a className="nav-link" href="/profile">
+                    Profile
+                  </a>
+                </li>
+              ) : null}
             </ul>
             {/* the links should follow the order of the above link!*/}
 
-            <a className="btn btn-outline-primary" href="/login">
-              Log In
-            </a>
+            {this.props.auth ? (
+              <a
+                className="btn btn-outline-danger"
+                href="/"
+                onClick={this.props.logOut}
+              >
+                Log Out
+              </a>
+            ) : (
+              <div>
+                <a className="btn btn-outline-primary" href="/login">
+                  Log In
+                </a>
 
-            <a className="btn btn-outline-success" href="/signup">
-              Sign Up
-            </a>
+                <a className="btn btn-outline-success" href="/signup">
+                  Sign Up
+                </a>
+              </div>
+            )}
           </div>
         </nav>
       </div>
