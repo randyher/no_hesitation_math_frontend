@@ -21,3 +21,11 @@ code {
 .text-box {
   width: 80px;
 }
+
+.btn {
+  margin-left: 7px;
+}
+
+.cards {
+  padding-left: 7%;
+}

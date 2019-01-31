@@ -24,11 +24,6 @@ export default class Navbar extends React.Component {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="/start">
-                  Start
-                </a>
-              </li>
               {this.props.auth ? (
                 <li className="nav-item active">
                   <a className="nav-link" href="/profile">
@@ -36,6 +31,11 @@ export default class Navbar extends React.Component {
                   </a>
                 </li>
               ) : null}
+              <li className="nav-item active">
+                <a className="nav-link" href="/start">
+                  Start
+                </a>
+              </li>
             </ul>
             {/* the links should follow the order of the above link!*/}
 
