@@ -25,6 +25,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData = () => {
     if (this.state.auth == true) {
       fetch("http://localhost:3000/api/v1/profile", {
         method: "GET",
@@ -42,7 +46,7 @@ class App extends Component {
           });
         });
     }
-  }
+  };
 
   handleRegisterSubmit = (e, info) => {
     e.preventDefault();
@@ -104,6 +108,27 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  addGame = newGame => {
+    console.log(newGame);
+    fetch(`http://localhost:3000/api/v1/games`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: Auth.getToken(),
+        Authorization: `Token ${Auth.getToken()}`
+      },
+      body: JSON.stringify({
+        game: newGame
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        this.getData();
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="App">
@@ -131,7 +156,10 @@ class App extends Component {
               )
             }
           />
-          <Route path="/start" render={() => <Sheet />} />
+          <Route
+            path="/start"
+            render={() => <Sheet addGame={this.addGame} />}
+          />
           {/*The Auth-options above*/}
           <Route
             path="/profile"

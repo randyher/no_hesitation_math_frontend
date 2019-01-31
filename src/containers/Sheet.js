@@ -65,6 +65,7 @@ class Sheet extends React.Component {
   };
 
   submitHandler = (e, state) => {
+    console.log(state);
     e.preventDefault();
     let timeLeft = state.timer;
     delete state.timer;
@@ -96,6 +97,12 @@ class Sheet extends React.Component {
         score: newScore,
         timeLeft: timeLeft
       });
+
+      let data = {
+        score: newScore,
+        time_remaining: timeLeft
+      };
+      this.props.addGame(data);
     }
   };
 
@@ -140,7 +147,7 @@ class Sheet extends React.Component {
         ) : (
           <h2>
             Correct: {this.state.score}/24 <br />
-            Time Left: {this.state.timeLeft}
+            Time Remaining: {this.state.timeLeft}
           </h2>
         )}
       </div>
