@@ -5,26 +5,6 @@ class Sheet extends React.Component {
   state = {
     start: false,
     score: 0,
-    questions: [
-      "2 + 8 =",
-      "3 + 9 =",
-      "3 + 8 =",
-      "3 + 7 =",
-      "4 + 9 =",
-      "5 + 5 =",
-      "5 + 3 =",
-      "5 + 6 =",
-      "6 + 5 =",
-      "6 + 4 =",
-      "7 + 3 =",
-      "7 + 7 =",
-      "7 + 6 =",
-      "7 + 4 =",
-      "8 + 8 =",
-      "8 + 9 =",
-      "9 + 6 =",
-      "9 + 4 ="
-    ],
     done: false,
     timeLeft: 0
   };
@@ -39,6 +19,7 @@ class Sheet extends React.Component {
     delete state.timer;
     let inputs = Object.values(state);
     let newScore = 0;
+    let problems = [];
 
     if (inputs.length === 0) {
       this.setState({
@@ -49,10 +30,17 @@ class Sheet extends React.Component {
     }
 
     if (inputs.length > 0) {
-      // Logic Under Here -- add subtraction later!
-      let numbers = inputs[0].split(/[\s+=]+/);
       inputs.forEach(numberSentence => {
         let numbers = numberSentence.split(/[\s+=]+/);
+
+        this.props.problems.forEach(problem => {
+          let databaseNum = problem.number_sentence.split(/[\s+=]+/);
+
+          if (numbers[0] === databaseNum[0] && numbers[1] === databaseNum[1]) {
+            problems.push(problem);
+          }
+        });
+
         if (
           parseInt(numbers[0]) + parseInt(numbers[1]) ===
           parseInt(numbers[2])
@@ -66,16 +54,24 @@ class Sheet extends React.Component {
         score: newScore,
         timeLeft: 0
       });
+
+      let data = {
+        score: newScore,
+        time_remaining: 0,
+        problems
+      };
+
+      this.props.addGame(data);
     }
   };
 
   submitHandler = (e, state) => {
-    console.log(state);
     e.preventDefault();
     let timeLeft = state.timer;
     delete state.timer;
     let inputs = Object.values(state);
     let newScore = 0;
+    let problems = [];
 
     if (inputs.length === 0) {
       this.setState({
@@ -86,9 +82,17 @@ class Sheet extends React.Component {
     }
 
     if (inputs.length > 0) {
-      let numbers = inputs[0].split(/[\s+=]+/);
       inputs.forEach(numberSentence => {
         let numbers = numberSentence.split(/[\s+=]+/);
+
+        this.props.problems.forEach(problem => {
+          let databaseNum = problem.number_sentence.split(/[\s+=]+/);
+
+          if (numbers[0] === databaseNum[0] && numbers[1] === databaseNum[1]) {
+            problems.push(problem);
+          }
+        });
+
         if (
           parseInt(numbers[0]) + parseInt(numbers[1]) ===
           parseInt(numbers[2])
@@ -105,8 +109,10 @@ class Sheet extends React.Component {
 
       let data = {
         score: newScore,
-        time_remaining: timeLeft
+        time_remaining: timeLeft,
+        problems
       };
+
       this.props.addGame(data);
     }
   };
@@ -116,12 +122,13 @@ class Sheet extends React.Component {
     let i = 0;
     while (i < 24) {
       questionBank.push(
-        this.state.questions[
-          Math.floor(Math.random() * this.state.questions.length)
+        this.props.numberSentences[
+          Math.floor(Math.random() * this.props.numberSentences.length)
         ]
       );
       i++;
     }
+
     return (
       <div className="homePage">
         <br />

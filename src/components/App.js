@@ -21,7 +21,9 @@ class App extends Component {
   state = {
     auth: Auth.isUserAuthenticated(),
     username: "",
-    games: []
+    allGames: [],
+    games: [],
+    problems: []
   };
 
   componentDidMount() {
@@ -29,6 +31,22 @@ class App extends Component {
   }
 
   getData = () => {
+    fetch("http://localhost:3000/api/v1/problems")
+      .then(res => res.json())
+      .then(probs => {
+        this.setState({
+          problems: probs
+        });
+      });
+
+    fetch("http://localhost:3000/api/v1/games")
+      .then(res => res.json())
+      .then(games => {
+        this.setState({
+          allGames: games
+        });
+      });
+
     if (this.state.auth == true) {
       fetch("http://localhost:3000/api/v1/profile", {
         method: "GET",
@@ -39,7 +57,6 @@ class App extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
           this.setState({
             username: res.user.username,
             games: res.games
@@ -114,6 +131,7 @@ class App extends Component {
 
   addGame = newGame => {
     console.log(newGame);
+
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
       headers: {
@@ -127,13 +145,34 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         this.getData();
       })
-      .catch(err => console.log(err));
+      .then(data => {
+        newGame.problems.forEach(problem => {
+          console.log("ProbID:", problem.id);
+          let num = this.state.allGames.length + 1;
+
+          fetch(`http://localhost:3000/api/v1/gamesproblems`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              game_id: num,
+              problem_id: problem.id
+            })
+          });
+        });
+      });
   };
 
   render() {
+    const numberSentences = [];
+    this.state.problems.forEach(problem => {
+      numberSentences.push(problem.number_sentence);
+    });
+    console.log(this.state.games[0]);
+
     return (
       <div className="App">
         <Navbar auth={this.state.auth} logOut={this.handleLogOut} />
@@ -162,7 +201,13 @@ class App extends Component {
           />
           <Route
             path="/start"
-            render={() => <Sheet addGame={this.addGame} />}
+            render={() => (
+              <Sheet
+                addGame={this.addGame}
+                problems={this.state.problems}
+                numberSentences={numberSentences}
+              />
+            )}
           />
           {/*The Auth-options above*/}
           <Route

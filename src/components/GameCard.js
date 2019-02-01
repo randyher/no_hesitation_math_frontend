@@ -2,9 +2,9 @@ import React from "react";
 
 const GameCard = props => {
   const { game } = props;
-  console.log("Hey");
+
   return (
-    <div class="card">
+    <div class="card" onClick={() => props.displayResults(game)}>
       <div class="content">
         <div class="header">NHM {props.num}</div>
         <div class="meta">
