@@ -9,10 +9,14 @@ class Sheet extends React.Component {
       "2 + 8 =",
       "3 + 9 =",
       "3 + 8 =",
+      "3 + 7 =",
       "4 + 9 =",
       "5 + 5 =",
       "5 + 3 =",
+      "5 + 6 =",
+      "6 + 5 =",
       "6 + 4 =",
+      "7 + 3 =",
       "7 + 7 =",
       "7 + 6 =",
       "7 + 4 =",
@@ -45,6 +49,7 @@ class Sheet extends React.Component {
     }
 
     if (inputs.length > 0) {
+      // Logic Under Here -- add subtraction later!
       let numbers = inputs[0].split(/[\s+=]+/);
       inputs.forEach(numberSentence => {
         let numbers = numberSentence.split(/[\s+=]+/);
@@ -145,10 +150,15 @@ class Sheet extends React.Component {
             timeOutHandler={this.timeOutHandler}
           />
         ) : (
-          <h2>
-            Correct: {this.state.score}/24 <br />
-            Time Remaining: {this.state.timeLeft}
-          </h2>
+          <div>
+            <h1>Results</h1>
+            <br />
+
+            <h2>
+              Correct: {this.state.score}/24 <br />
+              Time Remaining: {this.state.timeLeft}
+            </h2>
+          </div>
         )}
       </div>
     );
