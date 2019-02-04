@@ -20,6 +20,7 @@ class Sheet extends React.Component {
     let inputs = Object.values(state);
     let newScore = 0;
     let problems = [];
+    let answers = [];
 
     if (inputs.length === 0) {
       this.setState({
@@ -31,19 +32,33 @@ class Sheet extends React.Component {
 
     if (inputs.length > 0) {
       inputs.forEach(numberSentence => {
-        let numbers = numberSentence.split(/[\s+=]+/);
+        let numbers = numberSentence.split(/[\s=]+/);
+        answers.push(numbers[3]);
 
         this.props.problems.forEach(problem => {
-          let databaseNum = problem.number_sentence.split(/[\s+=]+/);
+          let databaseNum = problem.number_sentence.split(/[\s=]+/);
 
-          if (numbers[0] === databaseNum[0] && numbers[1] === databaseNum[1]) {
+          if (
+            numbers[0] === databaseNum[0] &&
+            numbers[1] === databaseNum[1] &&
+            numbers[2] === databaseNum[2]
+          ) {
             problems.push(problem);
           }
         });
 
         if (
-          parseInt(numbers[0]) + parseInt(numbers[1]) ===
-          parseInt(numbers[2])
+          parseInt(numbers[0]) + parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "+"
+        ) {
+          newScore += 1;
+        }
+
+        if (
+          parseInt(numbers[0]) - parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "-"
         ) {
           newScore += 1;
         }
@@ -55,10 +70,13 @@ class Sheet extends React.Component {
         timeLeft: 0
       });
 
+      console.log(answers);
+
       let data = {
         score: newScore,
         time_remaining: 0,
-        problems
+        problems,
+        answers
       };
 
       this.props.addGame(data);
@@ -72,6 +90,7 @@ class Sheet extends React.Component {
     let inputs = Object.values(state);
     let newScore = 0;
     let problems = [];
+    let answers = [];
 
     if (inputs.length === 0) {
       this.setState({
@@ -83,19 +102,33 @@ class Sheet extends React.Component {
 
     if (inputs.length > 0) {
       inputs.forEach(numberSentence => {
-        let numbers = numberSentence.split(/[\s+=]+/);
+        let numbers = numberSentence.split(/[\s=]+/);
+        answers.push(numbers[3]);
 
         this.props.problems.forEach(problem => {
-          let databaseNum = problem.number_sentence.split(/[\s+=]+/);
+          let databaseNum = problem.number_sentence.split(/[\s=]+/);
 
-          if (numbers[0] === databaseNum[0] && numbers[1] === databaseNum[1]) {
+          if (
+            numbers[0] === databaseNum[0] &&
+            numbers[1] === databaseNum[1] &&
+            numbers[2] === databaseNum[2]
+          ) {
             problems.push(problem);
           }
         });
 
         if (
-          parseInt(numbers[0]) + parseInt(numbers[1]) ===
-          parseInt(numbers[2])
+          parseInt(numbers[0]) + parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "+"
+        ) {
+          newScore += 1;
+        }
+
+        if (
+          parseInt(numbers[0]) - parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "-"
         ) {
           newScore += 1;
         }
@@ -110,7 +143,8 @@ class Sheet extends React.Component {
       let data = {
         score: newScore,
         time_remaining: timeLeft,
-        problems
+        problems,
+        answers
       };
 
       this.props.addGame(data);
@@ -137,13 +171,15 @@ class Sheet extends React.Component {
         {!this.state.start && !this.state.done ? (
           <div>
             <br />
-            <div>
-              <p className="info">
-                No Hesitation Math is a way for students to paractice their math
+            <div className="ui big message">
+              <div className="header">Directions</div>
+              <p>
+                No Hesitation Math is a way for students to practice their math
                 facts, testing them on speed and precision. When you click
-                start, a one minute timer will begin and you will be expect to
+                start, a one minute timer will begin and you will be expected to
                 complete all of the number sentences!
               </p>
+              <p>Good luck!</p>
             </div>
             <br />
             <button className="button" onClick={this.renderQuestions}>

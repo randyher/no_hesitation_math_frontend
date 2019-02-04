@@ -131,6 +131,7 @@ class App extends Component {
 
   addGame = newGame => {
     console.log(newGame);
+    let answerCount = 0;
 
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
@@ -150,7 +151,7 @@ class App extends Component {
       .then(data => {
         newGame.problems.forEach(problem => {
           let num = this.state.allGames.length + 1;
-          console.log(problem.id);
+          console.log(problem.number_sentence);
 
           fetch(`http://localhost:3000/api/v1/gamesproblems`, {
             method: "POST",
@@ -171,8 +172,6 @@ class App extends Component {
     this.state.problems.forEach(problem => {
       numberSentences.push(problem.number_sentence);
     });
-    console.log(this.state.games[0]);
-    console.log(this.state.allGames[0]);
 
     return (
       <div className="App">
