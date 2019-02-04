@@ -1,16 +1,23 @@
 import React from "react";
 import GameCard from "../components/GameCard";
+import ResultsPage from "../components/ResultsPage";
 
 class GameContainer extends React.Component {
   state = {
     displayResults: false,
-    currentGame: ""
+    currentGame: {}
   };
 
   displayResults = game => {
-    console.log(game.problems);
+    let fullGame = this.props.allGames.find(allgame => {
+      return allgame.id == game.id;
+    });
+
+    console.log(fullGame);
+
     this.setState({
-      currentGame: game
+      displayResults: !this.state.displayResults,
+      currentGame: fullGame
     });
   };
 
@@ -33,7 +40,12 @@ class GameContainer extends React.Component {
         <br />
         <h1>Welcome {this.props.username}!</h1>
         <br />
-        <div className="ui link cards">{allGames}</div>
+
+        {this.state.displayResults ? (
+          <ResultsPage results={this.state.currentGame} />
+        ) : (
+          <div className="ui link cards">{allGames}</div>
+        )}
       </div>
     );
   }
