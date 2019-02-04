@@ -6,12 +6,26 @@ class Sheet extends React.Component {
     start: false,
     score: 0,
     done: false,
-    timeLeft: 0
+    timeLeft: 0,
+    additionOnly: false,
+    subtractionOnly: false
   };
 
   renderQuestions = () => {
     this.setState({
       start: !this.state.start
+    });
+  };
+
+  filterAddQuestions = () => {
+    this.setState({
+      additionOnly: !this.state.additionOnly
+    });
+  };
+
+  filterSubtractQuestions = () => {
+    this.setState({
+      subtractionOnly: !this.state.subtractionOnly
     });
   };
 
@@ -163,6 +177,8 @@ class Sheet extends React.Component {
       i++;
     }
 
+    console.log(this.state.problems);
+
     return (
       <div className="homePage">
         <br />
@@ -179,6 +195,9 @@ class Sheet extends React.Component {
                 start, a one minute timer will begin and you will be expected to
                 complete all of the number sentences!
               </p>
+              {/* RADIO BUTTONS BELLOW */}
+
+              {/* RADIO BUTTONS ABOVE */}
               <p>Good luck!</p>
             </div>
             <br />
