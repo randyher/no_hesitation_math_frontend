@@ -7,15 +7,8 @@ import LogIn from "./LoginForm";
 import SignUp from "./SignupForm";
 import GameContainer from "../containers/GameContainer";
 import Sheet from "../containers/Sheet";
-import NumberSentence from "./NumberSentence";
 
-import {
-  BrowserRouter as Router,
-  Link,
-  Switch,
-  Redirect,
-  Route
-} from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -47,7 +40,7 @@ class App extends Component {
         });
       });
 
-    if (this.state.auth == true) {
+    if (this.state.auth === true) {
       fetch("http://localhost:3000/api/v1/profile", {
         method: "GET",
         headers: {
@@ -130,8 +123,10 @@ class App extends Component {
   };
 
   addGame = newGame => {
-    console.log(newGame);
-    let answerCount = 0;
+    console.log(newGame.problems);
+    console.log(newGame.answers);
+
+    // let answers = newGame.answers.join(" ,");
 
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
@@ -151,7 +146,6 @@ class App extends Component {
       .then(data => {
         newGame.problems.forEach(problem => {
           let num = this.state.allGames.length + 1;
-          console.log(problem.number_sentence);
 
           fetch(`http://localhost:3000/api/v1/gamesproblems`, {
             method: "POST",

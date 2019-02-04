@@ -10,7 +10,7 @@ class GameContainer extends React.Component {
 
   displayResults = game => {
     let fullGame = this.props.allGames.find(allgame => {
-      return allgame.id == game.id;
+      return allgame.id === game.id;
     });
 
     console.log(fullGame);

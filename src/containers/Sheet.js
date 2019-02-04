@@ -144,7 +144,7 @@ class Sheet extends React.Component {
         score: newScore,
         time_remaining: timeLeft,
         problems,
-        answers
+        answers: answers.join(", ")
       };
 
       this.props.addGame(data);
