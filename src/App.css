@@ -60,3 +60,11 @@
   margin-left: 30px;
   margin-right: 30px;
 }
+
+.correctAnswer {
+  color: green;
+}
+
+.incorrectAnswer {
+  color: red;
+}
