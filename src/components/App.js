@@ -16,7 +16,8 @@ class App extends Component {
     username: "",
     allGames: [],
     games: [],
-    problems: []
+    problems: [],
+    gameproblems: []
   };
 
   componentDidMount() {
@@ -29,6 +30,14 @@ class App extends Component {
       .then(probs => {
         this.setState({
           problems: probs
+        });
+      });
+
+    fetch("http://localhost:3000/api/v1/gamesproblems")
+      .then(res => res.json())
+      .then(all => {
+        this.setState({
+          gamesproblems: all
         });
       });
 
@@ -125,6 +134,7 @@ class App extends Component {
   addGame = newGame => {
     console.log(newGame.problems);
     console.log(newGame.answers);
+    let answerCount = 0;
 
     // let answers = newGame.answers.join(" ,");
 
@@ -154,9 +164,11 @@ class App extends Component {
             },
             body: JSON.stringify({
               game_id: num,
-              problem_id: problem.id
+              problem_id: problem.id,
+              answer: newGame.answers[answerCount]
             })
           });
+          answerCount++;
         });
       });
   };
@@ -213,6 +225,7 @@ class App extends Component {
                     username={this.state.username}
                     games={this.state.games}
                     allGames={this.state.allGames}
+                    submittedAnswers={this.state.gamesproblems}
                   />
                 </div>
               ) : (

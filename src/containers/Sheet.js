@@ -158,7 +158,7 @@ class Sheet extends React.Component {
         score: newScore,
         time_remaining: timeLeft,
         problems,
-        answers: answers.join(", ")
+        answers
       };
 
       this.props.addGame(data);
@@ -176,8 +176,6 @@ class Sheet extends React.Component {
       );
       i++;
     }
-
-    console.log(this.state.problems);
 
     return (
       <div className="homePage">

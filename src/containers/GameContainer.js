@@ -13,8 +13,6 @@ class GameContainer extends React.Component {
       return allgame.id === game.id;
     });
 
-    console.log(fullGame);
-
     this.setState({
       displayResults: !this.state.displayResults,
       currentGame: fullGame
@@ -42,7 +40,10 @@ class GameContainer extends React.Component {
         <br />
 
         {this.state.displayResults ? (
-          <ResultsPage results={this.state.currentGame} />
+          <ResultsPage
+            results={this.state.currentGame}
+            submittedAnswers={this.props.submittedAnswers}
+          />
         ) : (
           <div className="ui link cards">{allGames}</div>
         )}
