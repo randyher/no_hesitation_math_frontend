@@ -20,6 +20,12 @@ class GameContainer extends React.Component {
     });
   };
 
+  goBack = () => {
+    this.setState({
+      displayResults: false
+    });
+  };
+
   render() {
     let i = 0;
     const allGames = this.props.games.map(game => {
@@ -46,6 +52,7 @@ class GameContainer extends React.Component {
               <ResultsPage
                 results={this.state.currentGame}
                 submittedAnswers={this.props.submittedAnswers}
+                goBack={this.goBack}
               />
             ) : (
               <div className="ui link cards">{allGames}</div>

@@ -99,3 +99,8 @@ code {
 .ui.button {
   margin-right: 69%;
 }
+
+.ui.left.floated.button {
+  margin-top: 5%;
+  margin-left: 13%;
+}

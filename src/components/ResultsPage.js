@@ -9,8 +9,6 @@ class ResultsPage extends React.Component {
     );
 
     filteredAnswers.forEach(answer => {
-      console.log(log);
-
       this.props.results.problems.forEach(numberSentence => {
         if (!log.includes(answer)) {
           if (numberSentence.id === answer.problem_id) {
@@ -60,6 +58,9 @@ class ResultsPage extends React.Component {
         <h4>Time Left: {this.props.results.time_remaining} seconds</h4>
         <br />
         <div className="row">{this.displaySentence()}</div>
+        <button className="ui left floated button" onClick={this.props.goBack}>
+          Back
+        </button>
       </div>
     );
   }

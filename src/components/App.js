@@ -132,11 +132,7 @@ class App extends Component {
   };
 
   addGame = newGame => {
-    console.log(newGame.problems);
-    console.log(newGame.answers);
     let answerCount = 0;
-
-    // let answers = newGame.answers.join(" ,");
 
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
