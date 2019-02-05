@@ -29,3 +29,73 @@ code {
 .cards {
   padding-left: 7%;
 }
+
+.loading-font {
+  font-size: 80px;
+  display: block;
+  margin-top: 100px;
+}
+
+#load {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.radio-inline {
+  margin-left: 8px;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {
+  background-color: #3e8e41;
+}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.card-body {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.correctAnswer {
+  color: green;
+}
+
+.incorrectAnswer {
+  color: red;
+}
+
+.ui.message {
+  width: 50%;
+  margin: auto auto;
+}
+
+.ui.form {
+  margin-left: 41%;
+}
+
+.ui.field {
+  width: 30%;
+}
+
+.ui.button {
+  margin-right: 69%;
+}

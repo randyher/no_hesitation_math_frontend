@@ -1,6 +1,7 @@
 import React from "react";
 import GameCard from "../components/GameCard";
 import ResultsPage from "../components/ResultsPage";
+import Loading from "../components/Loading";
 
 class GameContainer extends React.Component {
   state = {
@@ -35,17 +36,23 @@ class GameContainer extends React.Component {
 
     return (
       <div>
-        <br />
-        <h1>Welcome {this.props.username}!</h1>
-        <br />
+        {this.props.username ? (
+          <div>
+            <br />
+            <h1>Welcome {this.props.username}!</h1>
+            <br />
 
-        {this.state.displayResults ? (
-          <ResultsPage
-            results={this.state.currentGame}
-            submittedAnswers={this.props.submittedAnswers}
-          />
+            {this.state.displayResults ? (
+              <ResultsPage
+                results={this.state.currentGame}
+                submittedAnswers={this.props.submittedAnswers}
+              />
+            ) : (
+              <div className="ui link cards">{allGames}</div>
+            )}
+          </div>
         ) : (
-          <div className="ui link cards">{allGames}</div>
+          <Loading />
         )}
       </div>
     );

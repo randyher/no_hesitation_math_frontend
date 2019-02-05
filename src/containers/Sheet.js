@@ -1,5 +1,6 @@
 import React from "react";
 import NumberSentence from "../components/NumberSentence.js";
+import FilterForm from "../components/FilterForm";
 
 class Sheet extends React.Component {
   state = {
@@ -19,13 +20,15 @@ class Sheet extends React.Component {
 
   filterAddQuestions = () => {
     this.setState({
-      additionOnly: !this.state.additionOnly
+      additionOnly: !this.state.additionOnly,
+      subtractionOnly: false
     });
   };
 
   filterSubtractQuestions = () => {
     this.setState({
-      subtractionOnly: !this.state.subtractionOnly
+      subtractionOnly: !this.state.subtractionOnly,
+      additionOnly: false
     });
   };
 
@@ -83,8 +86,6 @@ class Sheet extends React.Component {
         score: newScore,
         timeLeft: 0
       });
-
-      console.log(answers);
 
       let data = {
         score: newScore,
@@ -187,14 +188,17 @@ class Sheet extends React.Component {
             <br />
             <div className="ui big message">
               <div className="header">Directions</div>
-              <p>
+              <p className="directions">
                 No Hesitation Math is a way for students to practice their math
                 facts, testing them on speed and precision. When you click
                 start, a one minute timer will begin and you will be expected to
                 complete all of the number sentences!
               </p>
               {/* RADIO BUTTONS BELLOW */}
-
+              <FilterForm
+                additionQuestions={this.filterAddQuestions}
+                subtractionQuestions={this.filterSubtractQuestions}
+              />
               {/* RADIO BUTTONS ABOVE */}
               <p>Good luck!</p>
             </div>

@@ -16,35 +16,41 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="signupPage">
+        <br />
         <h1>Sign Up</h1>
 
         <br />
 
-        <form onSubmit={e => this.props.handleSubmit(e, this.state)}>
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
+        <form
+          className="ui form"
+          onSubmit={e => this.props.handleSubmit(e, this.state)}
+        >
+          <div className="ui field">
+            <input
+              type="text"
+              name="username"
+              placeholder="username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <br />
+          <div className="ui field">
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </div>
 
           <br />
           <br />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-
-          <br />
-          <br />
-
-          <input type="submit" value="Register!" />
+          <input className="ui button" type="submit" value="Register!" />
         </form>
       </div>
     );
