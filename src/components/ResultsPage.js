@@ -8,17 +8,14 @@ class ResultsPage extends React.Component {
       answer => answer.game_id === this.props.results.id
     );
 
-    // console.log(this.props.results.problems);
-    // console.log(filteredAnswers);
-
     filteredAnswers.forEach(answer => {
-      this.props.results.problems.forEach(numberSentence => {
-        if (numberSentence.id === answer.problem_id) {
-          log.push(numberSentence.id);
+      console.log(log);
 
-          if (log[log.length - 2] !== numberSentence.id) {
+      this.props.results.problems.forEach(numberSentence => {
+        if (!log.includes(answer)) {
+          if (numberSentence.id === answer.problem_id) {
             let splitData = numberSentence.number_sentence.split(/[\s=]+/);
-            console.log(splitData);
+
             if (
               splitData[1] === "+" &&
               parseInt(splitData[0]) + parseInt(splitData[2]) === answer.answer
@@ -47,6 +44,7 @@ class ResultsPage extends React.Component {
                 </div>
               );
             }
+            log.push(answer);
           }
         }
       });
