@@ -182,8 +182,10 @@ class Sheet extends React.Component {
               <FilterForm
                 additionQuestions={this.props.filterAddQuestions}
                 subtractionQuestions={this.props.filterSubtractQuestions}
+                halveQuestions={this.props.filterHalveQuestions}
                 addBoolean={this.props.addBoolean}
                 subBoolean={this.props.subBoolean}
+                halfBoolean={this.props.halfBoolean}
               />
               {/* RADIO BUTTONS ABOVE */}
               <p>Good luck!</p>

@@ -20,7 +20,8 @@ class App extends Component {
     filteredProblems: [],
     gameproblems: [],
     additionOnly: false,
-    subtractionOnly: false
+    subtractionOnly: false,
+    doubleAndHalf: false
   };
 
   componentDidMount() {
@@ -183,7 +184,6 @@ class App extends Component {
     if (!this.state.additionOnly) {
       this.setState({
         additionOnly: true,
-        subtractionOnly: false,
         filteredProblems: additionOnlyProblems
       });
     } else {
@@ -192,7 +192,6 @@ class App extends Component {
         filteredProblems: original
       });
     }
-    console.log(this.state.filteredProblems);
   };
 
   filterSubtractQuestions = () => {
@@ -204,7 +203,6 @@ class App extends Component {
 
     if (!this.state.subtractionOnly) {
       this.setState({
-        additionOnly: false,
         subtractionOnly: true,
         filteredProblems: subOnlyProblems
       });
@@ -214,7 +212,30 @@ class App extends Component {
         filteredProblems: original
       });
     }
-    console.log(this.state.filteredProblems);
+  };
+
+  filterHalveQuestions = () => {
+    console.log("half");
+    let original = [...this.state.problems];
+
+    let halfOnlyProblems = this.state.problems.filter(problem => {
+      return (
+        problem.problem_type.split(" ")[1] === "Doubles" ||
+        problem.problem_type.split(" ")[1] === "Halving"
+      );
+    });
+
+    if (!this.state.doubleAndHalf) {
+      this.setState({
+        doubleAndHalf: true,
+        filteredProblems: halfOnlyProblems
+      });
+    } else {
+      this.setState({
+        doubleAndHalf: false,
+        filteredProblems: original
+      });
+    }
   };
 
   render() {
@@ -258,8 +279,10 @@ class App extends Component {
                 numberSentences={numberSentences}
                 filterAddQuestions={this.filterAddQuestions}
                 filterSubtractQuestions={this.filterSubtractQuestions}
+                filterHalveQuestions={this.filterHalveQuestions}
                 addBoolean={this.state.additionOnly}
                 subBoolean={this.state.subtractionOnly}
+                halfBoolean={this.state.doubleAndHalf}
               />
             )}
           />

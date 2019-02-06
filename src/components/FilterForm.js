@@ -18,7 +18,7 @@ class FilterForm extends React.Component {
               type="checkbox"
               value={this.state.addition}
               onChange={this.props.additionQuestions}
-              disabled={this.props.subBoolean}
+              disabled={this.props.subBoolean || this.props.halfBoolean}
             />
           </label>
 
@@ -28,7 +28,17 @@ class FilterForm extends React.Component {
               name="isGoing"
               type="checkbox"
               onChange={this.props.subtractionQuestions}
-              disabled={this.props.addBoolean}
+              disabled={this.props.addBoolean || this.props.halfBoolean}
+            />
+          </label>
+
+          <label>
+            &nbsp; Double & Halves &nbsp;
+            <input
+              name="isGoing"
+              type="checkbox"
+              onChange={this.props.halveQuestions}
+              disabled={this.props.addBoolean || this.props.subBoolean}
             />
           </label>
         </form>
