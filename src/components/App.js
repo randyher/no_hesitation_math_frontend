@@ -17,7 +17,10 @@ class App extends Component {
     allGames: [],
     games: [],
     problems: [],
-    gameproblems: []
+    filteredProblems: [],
+    gameproblems: [],
+    additionOnly: false,
+    subtractionOnly: false
   };
 
   componentDidMount() {
@@ -29,7 +32,8 @@ class App extends Component {
       .then(res => res.json())
       .then(probs => {
         this.setState({
-          problems: probs
+          problems: probs,
+          filteredProblems: probs
         });
       });
 
@@ -169,9 +173,53 @@ class App extends Component {
       });
   };
 
+  filterAddQuestions = () => {
+    let original = [...this.state.problems];
+
+    let additionOnlyProblems = this.state.problems.filter(problem => {
+      return problem.problem_type.split(" ")[0] === "Addition";
+    });
+
+    if (!this.state.additionOnly) {
+      this.setState({
+        additionOnly: true,
+        subtractionOnly: false,
+        filteredProblems: additionOnlyProblems
+      });
+    } else {
+      this.setState({
+        additionOnly: false,
+        filteredProblems: original
+      });
+    }
+    console.log(this.state.filteredProblems);
+  };
+
+  filterSubtractQuestions = () => {
+    let original = [...this.state.problems];
+
+    let subOnlyProblems = this.state.problems.filter(problem => {
+      return problem.problem_type.split(" ")[0] === "Subtraction";
+    });
+
+    if (!this.state.subtractionOnly) {
+      this.setState({
+        additionOnly: false,
+        subtractionOnly: true,
+        filteredProblems: subOnlyProblems
+      });
+    } else {
+      this.setState({
+        subtractionOnly: false,
+        filteredProblems: original
+      });
+    }
+    console.log(this.state.filteredProblems);
+  };
+
   render() {
     const numberSentences = [];
-    this.state.problems.forEach(problem => {
+    this.state.filteredProblems.forEach(problem => {
       numberSentences.push(problem.number_sentence);
     });
 
@@ -208,6 +256,10 @@ class App extends Component {
                 addGame={this.addGame}
                 problems={this.state.problems}
                 numberSentences={numberSentences}
+                filterAddQuestions={this.filterAddQuestions}
+                filterSubtractQuestions={this.filterSubtractQuestions}
+                addBoolean={this.state.additionOnly}
+                subBoolean={this.state.subtractionOnly}
               />
             )}
           />

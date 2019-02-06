@@ -7,28 +7,12 @@ class Sheet extends React.Component {
     start: false,
     score: 0,
     done: false,
-    timeLeft: 0,
-    additionOnly: false,
-    subtractionOnly: false
+    timeLeft: 0
   };
 
   renderQuestions = () => {
     this.setState({
       start: !this.state.start
-    });
-  };
-
-  filterAddQuestions = () => {
-    this.setState({
-      additionOnly: !this.state.additionOnly,
-      subtractionOnly: false
-    });
-  };
-
-  filterSubtractQuestions = () => {
-    this.setState({
-      subtractionOnly: !this.state.subtractionOnly,
-      additionOnly: false
     });
   };
 
@@ -196,8 +180,10 @@ class Sheet extends React.Component {
               </p>
               {/* RADIO BUTTONS BELLOW */}
               <FilterForm
-                additionQuestions={this.filterAddQuestions}
-                subtractionQuestions={this.filterSubtractQuestions}
+                additionQuestions={this.props.filterAddQuestions}
+                subtractionQuestions={this.props.filterSubtractQuestions}
+                addBoolean={this.props.addBoolean}
+                subBoolean={this.props.subBoolean}
               />
               {/* RADIO BUTTONS ABOVE */}
               <p>Good luck!</p>
