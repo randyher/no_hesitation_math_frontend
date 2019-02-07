@@ -7,6 +7,7 @@ import LogIn from "./LoginForm";
 import SignUp from "./SignupForm";
 import GameContainer from "../containers/GameContainer";
 import Sheet from "../containers/Sheet";
+import Stats from "./Stats";
 
 import { Switch, Redirect, Route } from "react-router-dom";
 
@@ -21,7 +22,8 @@ class App extends Component {
     gameproblems: [],
     additionOnly: false,
     subtractionOnly: false,
-    doubleAndHalf: false
+    doubleAndHalf: false,
+    tensOnly: false
   };
 
   componentDidMount() {
@@ -215,7 +217,6 @@ class App extends Component {
   };
 
   filterHalveQuestions = () => {
-    console.log("half");
     let original = [...this.state.problems];
 
     let halfOnlyProblems = this.state.problems.filter(problem => {
@@ -233,6 +234,27 @@ class App extends Component {
     } else {
       this.setState({
         doubleAndHalf: false,
+        filteredProblems: original
+      });
+    }
+  };
+
+  filterTensQuestions = () => {
+    console.log("tens");
+    let original = [...this.state.problems];
+
+    let tensOnlyProblems = this.state.problems.filter(problem => {
+      return problem.problem_type.split(" ")[1] === "Tens";
+    });
+
+    if (!this.state.tensOnly) {
+      this.setState({
+        tensOnly: true,
+        filteredProblems: tensOnlyProblems
+      });
+    } else {
+      this.setState({
+        tensOnly: false,
         filteredProblems: original
       });
     }
@@ -261,6 +283,18 @@ class App extends Component {
             }
           />
           <Route
+            path="/stats"
+            render={() =>
+              this.state.auth ? (
+                <div>
+                  <Stats data={this.state.games} />
+                </div>
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
             path="/signup"
             render={() =>
               this.state.auth ? (
@@ -280,9 +314,11 @@ class App extends Component {
                 filterAddQuestions={this.filterAddQuestions}
                 filterSubtractQuestions={this.filterSubtractQuestions}
                 filterHalveQuestions={this.filterHalveQuestions}
+                filterTensQuestions={this.filterTensQuestions}
                 addBoolean={this.state.additionOnly}
                 subBoolean={this.state.subtractionOnly}
                 halfBoolean={this.state.doubleAndHalf}
+                tensBoolean={this.state.tensOnly}
               />
             )}
           />

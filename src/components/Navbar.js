@@ -31,6 +31,14 @@ export default class Navbar extends React.Component {
                   </a>
                 </li>
               ) : null}
+
+              {this.props.auth ? (
+                <li className="nav-item active">
+                  <a className="nav-link" href="/stats">
+                    Stats
+                  </a>
+                </li>
+              ) : null}
               <li className="nav-item active">
                 <a className="nav-link" href="/start">
                   Start

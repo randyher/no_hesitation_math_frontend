@@ -178,14 +178,22 @@ class Sheet extends React.Component {
                 start, a one minute timer will begin and you will be expected to
                 complete all of the number sentences!
               </p>
+
+              <p className="directions">
+                Under, you may pick to filter the questions in order to practice
+                a specific pressure point. If nothing is selected, all possible
+                questions will be launched!
+              </p>
               {/* RADIO BUTTONS BELLOW */}
               <FilterForm
                 additionQuestions={this.props.filterAddQuestions}
                 subtractionQuestions={this.props.filterSubtractQuestions}
                 halveQuestions={this.props.filterHalveQuestions}
+                tensQuestions={this.props.filterTensQuestions}
                 addBoolean={this.props.addBoolean}
                 subBoolean={this.props.subBoolean}
                 halfBoolean={this.props.halfBoolean}
+                tensBoolean={this.props.tensBoolean}
               />
               {/* RADIO BUTTONS ABOVE */}
               <p>Good luck!</p>
