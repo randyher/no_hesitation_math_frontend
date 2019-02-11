@@ -196,6 +196,9 @@ class Sheet extends React.Component {
                 tensBoolean={this.props.tensBoolean}
               />
               {/* RADIO BUTTONS ABOVE */}
+              <p className="directions">
+                Hint: Press tab to quickly cycle through the questions!
+              </p>
               <p>Good luck!</p>
             </div>
             <br />

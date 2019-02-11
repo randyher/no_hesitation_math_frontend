@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "./Loading";
 import {
   XYPlot,
   XAxis,
@@ -25,44 +26,50 @@ class Stats extends React.Component {
 
     return (
       <div>
-        <div class="split left">
-          <div class="centered">
-            <h1 className="timeHeading">Time Remaining</h1>
-            <br />
-            <XYPlot
-              className="timeGraph"
-              xType="ordinal"
-              width={600}
-              height={600}
-            >
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis title="round" />
-              <YAxis title="seconds remaining" />
-              <VerticalBarSeries data={timeData} />
-            </XYPlot>
-          </div>
-        </div>
+        {this.props.data.length > 0 ? (
+          <div>
+            <div class="split left">
+              <div class="centered">
+                <h1 className="timeHeading">Time Remaining</h1>
+                <br />
+                <XYPlot
+                  className="timeGraph"
+                  xType="ordinal"
+                  width={600}
+                  height={600}
+                >
+                  <VerticalGridLines />
+                  <HorizontalGridLines />
+                  <XAxis title="round" />
+                  <YAxis title="seconds remaining" />
+                  <VerticalBarSeries data={timeData} />
+                </XYPlot>
+              </div>
+            </div>
 
-        <div class="split right">
-          <div class="centered">
-            <h1 className="timeHeading">Score</h1>
-            <br />
-            <XYPlot
-              className="scoreGraph"
-              xType="ordinal"
-              width={600}
-              height={600}
-              color="purple"
-            >
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis title="round" />
-              <YAxis title="questions correct" />
-              <VerticalBarSeries data={scoreData} />
-            </XYPlot>
+            <div class="split right">
+              <div class="centered">
+                <h1 className="timeHeading">Score</h1>
+                <br />
+                <XYPlot
+                  className="scoreGraph"
+                  xType="ordinal"
+                  width={600}
+                  height={600}
+                  color="purple"
+                >
+                  <VerticalGridLines />
+                  <HorizontalGridLines />
+                  <XAxis title="round" />
+                  <YAxis title="questions correct" />
+                  <VerticalBarSeries data={scoreData} />
+                </XYPlot>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }
