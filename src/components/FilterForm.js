@@ -7,7 +7,6 @@ class FilterForm extends React.Component {
   };
 
   render() {
-    console.log(this.props.addBoolean);
     return (
       <div>
         <form>
@@ -41,7 +40,7 @@ class FilterForm extends React.Component {
           </label>
 
           <label>
-            &nbsp;Double & Halves&nbsp;
+            &nbsp;Doubles & Halves&nbsp;
             <input
               name="isGoing"
               type="checkbox"

@@ -218,7 +218,7 @@ class Sheet extends React.Component {
             <br />
 
             <h2>
-              Correct: {this.state.score}/24 <br />
+              Correct: {this.state.score} / 24 <br />
               Time Remaining: {this.state.timeLeft}
             </h2>
           </div>

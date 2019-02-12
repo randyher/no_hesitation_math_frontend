@@ -106,7 +106,6 @@ class ResultsPage extends React.Component {
       });
     });
 
-    console.log(filteredAnswers.length);
     if (filteredAnswers.length !== 24) {
       feedback.unshift("Finishing problems");
     }
@@ -115,13 +114,11 @@ class ResultsPage extends React.Component {
       feedback.unshift("Timing");
     }
 
-    console.log(feedback);
     let output = [];
     let unique = [...new Set(feedback)];
     unique.forEach(elem => {
       output.push(<li>{elem}</li>);
     });
-    console.log(unique);
 
     return output;
   };
@@ -129,8 +126,9 @@ class ResultsPage extends React.Component {
   render() {
     return (
       <div>
-        <h4>Correct: {this.props.results.score}</h4>
+        <h4>Correct: {this.props.results.score} / 24</h4>
         <h4>Time Left: {this.props.results.time_remaining} seconds</h4>
+        <h4>Question Type: {this.props.results.game_type}</h4>
         <br />
         <div className="row">{this.displaySentence()}</div>
         <br />

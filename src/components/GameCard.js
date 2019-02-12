@@ -12,6 +12,7 @@ const GameCard = props => {
         </div>
         <div className="description">Questions Correct: {game.score}</div>
         <div className="description">Time Remaining: {game.time_remaining}</div>
+        <div className="description">Question Type: {game.game_type}</div>
       </div>
     </div>
   );

@@ -143,6 +143,20 @@ class App extends Component {
   addGame = newGame => {
     let answerCount = 0;
 
+    if (this.state.additionOnly) {
+      newGame["game_type"] = "Addition Only";
+    } else if (this.state.subtractionOnly) {
+      newGame["game_type"] = "Subtraction Only";
+    } else if (this.state.doubleAndHalf) {
+      newGame["game_type"] = "Doubles & Halves Only";
+    } else if (this.state.tensOnly) {
+      newGame["game_type"] = "Tens Only";
+    } else {
+      newGame["game_type"] = "All";
+    }
+
+    console.log(newGame);
+
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
       headers: {
@@ -267,7 +281,6 @@ class App extends Component {
     this.state.filteredProblems.forEach(problem => {
       numberSentences.push(problem.number_sentence);
     });
-    console.log(this.state.currentGrade);
 
     return (
       <div className="App">
