@@ -46,6 +46,7 @@ class GameContainer extends React.Component {
           <div>
             <br />
             <h1>Welcome {this.props.username}!</h1>
+            <p>Current Grade: {this.props.grade}</p>
             <br />
 
             {this.state.displayResults ? (

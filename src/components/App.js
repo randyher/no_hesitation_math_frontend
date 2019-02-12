@@ -15,8 +15,9 @@ class App extends Component {
   state = {
     auth: Auth.isUserAuthenticated(),
     username: "",
-    allGames: [],
+    currentGrade: "",
     games: [],
+    allGames: [],
     problems: [],
     filteredProblems: [],
     gameproblems: [],
@@ -68,6 +69,7 @@ class App extends Component {
         .then(res => {
           this.setState({
             username: res.user.username,
+            currentGrade: res.user.grade,
             games: res.games
           });
         });
@@ -265,6 +267,7 @@ class App extends Component {
     this.state.filteredProblems.forEach(problem => {
       numberSentences.push(problem.number_sentence);
     });
+    console.log(this.state.currentGrade);
 
     return (
       <div className="App">
@@ -333,6 +336,7 @@ class App extends Component {
                     games={this.state.games}
                     allGames={this.state.allGames}
                     submittedAnswers={this.state.gamesproblems}
+                    grade={this.state.currentGrade}
                   />
                 </div>
               ) : (

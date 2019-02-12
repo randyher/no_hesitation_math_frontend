@@ -3,7 +3,8 @@ import React from "react";
 class SignUp extends React.Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    grade: "2nd"
   };
 
   handleChange = e => {
@@ -45,6 +46,17 @@ class SignUp extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
+          <select
+            name="grade"
+            className="gradeSelect"
+            onChange={this.handleChange}
+          >
+            <option value="1st">Grade 1</option>
+            <option selected value="2nd">
+              Grade 2
+            </option>
+          </select>
 
           <br />
 
