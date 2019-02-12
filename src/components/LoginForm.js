@@ -35,7 +35,6 @@ class LogIn extends React.Component {
             />
           </div>
 
-          <br />
           <div className="ui field">
             <input
               type="password"
@@ -46,7 +45,6 @@ class LogIn extends React.Component {
             />
           </div>
 
-          <br />
           <br />
 
           <input className="ui button" type="submit" value="Log In!" />

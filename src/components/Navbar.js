@@ -40,30 +40,6 @@ export default class Navbar extends React.Component {
                 </li>
               ) : null}
 
-              {this.props.auth ? (
-                <li class="nav-item active dropdown">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Grade
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">
-                      1st Grade
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      2nd Grade
-                    </a>
-                  </div>
-                </li>
-              ) : null}
-
               <li className="nav-item active">
                 <a className="nav-link" href="/start">
                   Start
