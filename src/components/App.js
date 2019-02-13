@@ -155,8 +155,6 @@ class App extends Component {
       newGame["game_type"] = "All";
     }
 
-    console.log(newGame);
-
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
       headers: {
@@ -276,6 +274,24 @@ class App extends Component {
     }
   };
 
+  // deleteGame = (e, game) => {
+  //   fetch(`http://localhost:3000/api/v1/games/${game.id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Token ${Auth.getToken()}`
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       this.setState({
+  //         games: data
+  //       });
+  //
+  //       return <Redirect to="/" />;
+  //     });
+  // };
+
   render() {
     const numberSentences = [];
     this.state.filteredProblems.forEach(problem => {
@@ -350,6 +366,7 @@ class App extends Component {
                     allGames={this.state.allGames}
                     submittedAnswers={this.state.gamesproblems}
                     grade={this.state.currentGrade}
+                    deleteGame={this.deleteGame}
                   />
                 </div>
               ) : (

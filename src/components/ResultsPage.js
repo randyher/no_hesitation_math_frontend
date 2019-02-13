@@ -144,6 +144,14 @@ class ResultsPage extends React.Component {
         <button className="ui left floated button" onClick={this.props.goBack}>
           Back
         </button>
+        {/*
+        <i
+          class="trash icon"
+          onClick={e => this.props.deleteGame(e, this.props.results)}
+        >
+          &nbsp;Delete
+        </i>
+      */}
       </div>
     );
   }

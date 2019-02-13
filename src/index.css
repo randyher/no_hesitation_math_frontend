@@ -148,3 +148,8 @@ code {
 .gradeSelect {
   max-width: 10%;
 }
+
+.trash.icon {
+  margin-top: 5%;
+  margin-left: 50%;
+}

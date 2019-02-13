@@ -54,6 +54,7 @@ class GameContainer extends React.Component {
                 results={this.state.currentGame}
                 submittedAnswers={this.props.submittedAnswers}
                 goBack={this.goBack}
+                deleteGame={this.props.deleteGame}
               />
             ) : (
               <div className="ui link cards">{allGames}</div>
