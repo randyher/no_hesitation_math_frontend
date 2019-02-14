@@ -12,8 +12,8 @@ import {
 class Stats extends React.Component {
   render() {
     console.log(this.props.data);
-    let i = -1;
-    let y = -1;
+    let i = 0;
+    let y = 0;
     let timeData = this.props.data.map(game => {
       i++;
       return { x: i, y: game.time_remaining };

@@ -295,6 +295,7 @@ class App extends Component {
   render() {
     const numberSentences = [];
     this.state.filteredProblems.forEach(problem => {
+      //here I will put if problem.grade === currentGrade
       numberSentences.push(problem.number_sentence);
     });
 
