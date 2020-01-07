@@ -10,13 +10,12 @@ class GameContainer extends React.Component {
   };
 
   displayResults = game => {
-    let fullGame = this.props.allGames.find(allgame => {
-      return allgame.id === game.id;
-    });
+    console.log(game);
+    console.log(this.props);
 
     this.setState({
       displayResults: !this.state.displayResults,
-      currentGame: fullGame
+      currentGame: game
     });
   };
 

@@ -17,7 +17,6 @@ class App extends Component {
     username: "",
     currentGrade: "",
     games: [],
-    allGames: [],
     problems: [],
     filteredProblems: [],
     additionOnly: false,
@@ -37,14 +36,6 @@ class App extends Component {
         this.setState({
           problems: probs,
           filteredProblems: probs
-        });
-      });
-
-    fetch("http://localhost:3000/api/v1/games")
-      .then(res => res.json())
-      .then(games => {
-        this.setState({
-          allGames: games
         });
       });
 

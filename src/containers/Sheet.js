@@ -20,8 +20,25 @@ class Sheet extends React.Component {
     delete state.timer;
     let inputs = Object.values(state);
     let newScore = 0;
-    let problems = [];
-    let answers = [];
+    let number_sentences = inputs.join(" / ");
+
+    inputs.forEach(numberSentence => {
+      const numbers = numberSentence.split(/[\s=]+/);
+
+      if (
+        parseInt(numbers[0]) + parseInt(numbers[2]) === parseInt(numbers[3]) &&
+        numbers[1] === "+"
+      ) {
+        newScore++;
+      }
+
+      if (
+        parseInt(numbers[0]) - parseInt(numbers[2]) === parseInt(numbers[3]) &&
+        numbers[1] === "-"
+      ) {
+        newScore++;
+      }
+    });
 
     if (inputs.length === 0) {
       this.setState({
@@ -31,9 +48,19 @@ class Sheet extends React.Component {
       });
     }
 
+    if (inputs.length > 0) {
+      this.setState({
+        start: false,
+        done: true,
+        score: newScore,
+        timeLeft: 0
+      });
+    }
+
     let data = {
       score: newScore,
-      time_remaining: 0
+      time_remaining: 0,
+      number_sentences: number_sentences
     };
 
     this.props.addGame(data);
@@ -47,6 +74,23 @@ class Sheet extends React.Component {
     let inputs = Object.values(state);
     let newScore = 0;
     let number_sentences = inputs.join(" / ");
+    inputs.forEach(numberSentence => {
+      const numbers = numberSentence.split(/[\s=]+/);
+
+      if (
+        parseInt(numbers[0]) + parseInt(numbers[2]) === parseInt(numbers[3]) &&
+        numbers[1] === "+"
+      ) {
+        newScore++;
+      }
+
+      if (
+        parseInt(numbers[0]) - parseInt(numbers[2]) === parseInt(numbers[3]) &&
+        numbers[1] === "-"
+      ) {
+        newScore++;
+      }
+    });
 
     if (inputs.length === 0) {
       this.setState({

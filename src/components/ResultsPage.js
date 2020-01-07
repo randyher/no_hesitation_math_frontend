@@ -1,4 +1,5 @@
 import React from "react";
+import NumberSentence from "./NumberSentence";
 
 class ResultsPage extends React.Component {
   state = {
@@ -6,122 +7,81 @@ class ResultsPage extends React.Component {
   };
 
   displaySentence = () => {
-    let compiled = [];
-    let feedback = [];
-    let log = [];
-    let filteredAnswers = this.props.submittedAnswers.filter(
-      answer => answer.game_id === this.props.results.id
-    );
-
-    filteredAnswers.forEach(answer => {
-      this.props.results.problems.forEach(numberSentence => {
-        if (!log.includes(answer)) {
-          if (numberSentence.id === answer.problem_id) {
-            let splitData = numberSentence.number_sentence.split(/[\s=]+/);
-
-            if (
-              splitData[1] === "+" &&
-              parseInt(splitData[0]) + parseInt(splitData[2]) === answer.answer
-            ) {
-              compiled.push(
-                <div className="col-6 col-sm-4">
-                  {numberSentence.number_sentence} {answer.answer}
-                  <i className="correctAnswer">&#x2713;</i>
-                </div>
-              );
-            } else if (
-              splitData[1] === "-" &&
-              parseInt(splitData[0]) - parseInt(splitData[2]) === answer.answer
-            ) {
-              compiled.push(
-                <div className="col-6 col-sm-4">
-                  {numberSentence.number_sentence} {answer.answer}{" "}
-                  <i className="correctAnswer">&#x2713;</i>
-                </div>
-              );
-            } else {
-              compiled.push(
-                <div className="col-6 col-sm-4">
-                  {numberSentence.number_sentence} {answer.answer}{" "}
-                  <i className="incorrectAnswer">&#x2718;</i>
-                </div>
-              );
-            }
-            log.push(answer);
-          }
+    let compiled = this.props.results.number_sentences
+      .split(" / ")
+      .map(numberSentence => {
+        const numbers = numberSentence.split(/[\s=]+/);
+        let correct = false;
+        if (
+          parseInt(numbers[0]) + parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "+"
+        ) {
+          correct = true;
         }
+
+        if (
+          parseInt(numbers[0]) - parseInt(numbers[2]) ===
+            parseInt(numbers[3]) &&
+          numbers[1] === "-"
+        ) {
+          correct = true;
+        }
+
+        return (
+          <div className="col-6 col-sm-4">
+            {numberSentence}
+            {correct ? (
+              <i className="correctAnswer">&#x2713;</i>
+            ) : (
+              <i className="incorrectAnswer">&#x2718;</i>
+            )}
+          </div>
+        );
       });
-    });
 
     return compiled;
   };
 
-  displayFeedback = () => {
-    let compiled = [];
-    let feedback = [];
-    let log = [];
-    let filteredAnswers = this.props.submittedAnswers.filter(
-      answer => answer.game_id === this.props.results.id
-    );
+  // displayFeedback = () => {
+  //   let feedback = [];
+  //   let incorrectArray = this.props.results.number_sentences
+  //     .split(" / ")
+  //     .filter(numberSentence => {
+  //       const numbers = numberSentence.split(/[\s=]+/);
+  //       let notCorrect = true;
+  //       if (
+  //         parseInt(numbers[0]) + parseInt(numbers[2]) ===
+  //           parseInt(numbers[3]) &&
+  //         numbers[1] === "+"
+  //       ) {
+  //         notCorrect = false;
+  //       }
 
-    filteredAnswers.forEach(answer => {
-      this.props.results.problems.forEach(numberSentence => {
-        if (!log.includes(answer)) {
-          if (numberSentence.id === answer.problem_id) {
-            let splitData = numberSentence.number_sentence.split(/[\s=]+/);
+  //       if (
+  //         parseInt(numbers[0]) - parseInt(numbers[2]) ===
+  //           parseInt(numbers[3]) &&
+  //         numbers[1] === "-"
+  //       ) {
+  //         notCorrect = false;
+  //       }
+  //       return notCorrect;
+  //     });
 
-            if (
-              splitData[1] === "+" &&
-              parseInt(splitData[0]) + parseInt(splitData[2]) === answer.answer
-            ) {
-              compiled.push(
-                <div className="col-6 col-sm-4">
-                  {numberSentence.number_sentence} {answer.answer}{" "}
-                  <i className="correctAnswer">&#x2713;</i>
-                </div>
-              );
-            } else if (
-              splitData[1] === "-" &&
-              parseInt(splitData[0]) - parseInt(splitData[2]) === answer.answer
-            ) {
-              compiled.push(
-                <div className="col-6 col-sm-4">
-                  {numberSentence.number_sentence} {answer.answer}{" "}
-                  <i className="correctAnswer">&#x2713;</i>
-                </div>
-              );
-            } else {
-              if (numberSentence.problem_type.split(" ").length === 1) {
-                feedback.push(
-                  numberSentence.problem_type.split(" ")[0] + " Facts"
-                );
-              } else {
-                feedback.push(
-                  numberSentence.problem_type.split(" ")[1] + " Facts"
-                );
-              }
-            }
-          }
-        }
-      });
-    });
+  //   incorrectArray.map(numberSentence => {
+  //     const numbers = numberSentence.split(/[\s=]+/);
 
-    if (filteredAnswers.length !== 24) {
-      feedback.unshift("Finishing problems");
-    }
+  //     if (
+  //       parseInt(numbers[0]) === 10 ||
+  //       parseInt(numbers[2]) === 10 ||
+  //       parseInt(numbers[0]) + parseInt(numbers[2]) === 10
+  //     ) {
+  //       feedback.push(<li> Tens Facts</li>);
+  //     }
+  //   });
 
-    if (this.props.results.time_remaining === 0) {
-      feedback.unshift("Timing");
-    }
-
-    let output = [];
-    let unique = [...new Set(feedback)];
-    unique.forEach(elem => {
-      output.push(<li>{elem}</li>);
-    });
-
-    return output;
-  };
+  //   return feedback;
+  // };
 
   render() {
     return (
@@ -132,7 +92,7 @@ class ResultsPage extends React.Component {
         <br />
         <div className="row">{this.displaySentence()}</div>
         <br />
-        {this.props.results.score !== 24 ? (
+        {/*this.props.results.score !== 24 ? (
           <div className="ui large message">
             <div className="header">Feedback</div>
             <p className="directions">
@@ -140,7 +100,7 @@ class ResultsPage extends React.Component {
               {this.displayFeedback()}
             </p>
           </div>
-        ) : null}
+        ) : null*/}
         <button className="ui left floated button" onClick={this.props.goBack}>
           Back
         </button>
