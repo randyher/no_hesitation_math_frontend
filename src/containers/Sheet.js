@@ -31,65 +31,22 @@ class Sheet extends React.Component {
       });
     }
 
-    if (inputs.length > 0) {
-      inputs.forEach(numberSentence => {
-        let numbers = numberSentence.split(/[\s=]+/);
-        answers.push(numbers[3]);
+    let data = {
+      score: newScore,
+      time_remaining: 0
+    };
 
-        this.props.problems.forEach(problem => {
-          let databaseNum = problem.number_sentence.split(/[\s=]+/);
-
-          if (
-            numbers[0] === databaseNum[0] &&
-            numbers[1] === databaseNum[1] &&
-            numbers[2] === databaseNum[2]
-          ) {
-            problems.push(problem);
-          }
-        });
-
-        if (
-          parseInt(numbers[0]) + parseInt(numbers[2]) ===
-            parseInt(numbers[3]) &&
-          numbers[1] === "+"
-        ) {
-          newScore += 1;
-        }
-
-        if (
-          parseInt(numbers[0]) - parseInt(numbers[2]) ===
-            parseInt(numbers[3]) &&
-          numbers[1] === "-"
-        ) {
-          newScore += 1;
-        }
-      });
-      this.setState({
-        start: false,
-        done: true,
-        score: newScore,
-        timeLeft: 0
-      });
-
-      let data = {
-        score: newScore,
-        time_remaining: 0,
-        problems,
-        answers
-      };
-
-      this.props.addGame(data);
-    }
+    this.props.addGame(data);
   };
 
   submitHandler = (e, state) => {
     e.preventDefault();
     let timeLeft = state.timer;
+    console.log(state);
     delete state.timer;
     let inputs = Object.values(state);
     let newScore = 0;
-    let problems = [];
-    let answers = [];
+    let number_sentences = inputs.join(" / ");
 
     if (inputs.length === 0) {
       this.setState({
@@ -100,54 +57,21 @@ class Sheet extends React.Component {
     }
 
     if (inputs.length > 0) {
-      inputs.forEach(numberSentence => {
-        let numbers = numberSentence.split(/[\s=]+/);
-        answers.push(numbers[3]);
-
-        this.props.problems.forEach(problem => {
-          let databaseNum = problem.number_sentence.split(/[\s=]+/);
-
-          if (
-            numbers[0] === databaseNum[0] &&
-            numbers[1] === databaseNum[1] &&
-            numbers[2] === databaseNum[2]
-          ) {
-            problems.push(problem);
-          }
-        });
-
-        if (
-          parseInt(numbers[0]) + parseInt(numbers[2]) ===
-            parseInt(numbers[3]) &&
-          numbers[1] === "+"
-        ) {
-          newScore += 1;
-        }
-
-        if (
-          parseInt(numbers[0]) - parseInt(numbers[2]) ===
-            parseInt(numbers[3]) &&
-          numbers[1] === "-"
-        ) {
-          newScore += 1;
-        }
-      });
       this.setState({
         start: false,
         done: true,
         score: newScore,
         timeLeft: timeLeft
       });
-
-      let data = {
-        score: newScore,
-        time_remaining: timeLeft,
-        problems,
-        answers
-      };
-
-      this.props.addGame(data);
     }
+
+    let data = {
+      score: newScore,
+      time_remaining: timeLeft,
+      number_sentences: number_sentences
+    };
+
+    this.props.addGame(data);
   };
 
   render() {

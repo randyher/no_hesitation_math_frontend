@@ -20,7 +20,6 @@ class App extends Component {
     allGames: [],
     problems: [],
     filteredProblems: [],
-    gameproblems: [],
     additionOnly: false,
     subtractionOnly: false,
     doubleAndHalf: false,
@@ -38,14 +37,6 @@ class App extends Component {
         this.setState({
           problems: probs,
           filteredProblems: probs
-        });
-      });
-
-    fetch("http://localhost:3000/api/v1/gamesproblems")
-      .then(res => res.json())
-      .then(all => {
-        this.setState({
-          gamesproblems: all
         });
       });
 
@@ -141,8 +132,6 @@ class App extends Component {
   };
 
   addGame = newGame => {
-    let answerCount = 0;
-
     if (this.state.additionOnly) {
       newGame["game_type"] = "Addition Only";
     } else if (this.state.subtractionOnly) {
@@ -155,6 +144,7 @@ class App extends Component {
       newGame["game_type"] = "All";
     }
 
+    console.log(newGame);
     fetch(`http://localhost:3000/api/v1/games`, {
       method: "POST",
       headers: {
@@ -162,31 +152,11 @@ class App extends Component {
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       },
-      body: JSON.stringify({
-        game: newGame
-      })
+      body: JSON.stringify(newGame)
     })
       .then(res => res.json())
       .then(res => {
-        this.getData();
-      })
-      .then(data => {
-        newGame.problems.forEach(problem => {
-          let num = this.state.allGames.length + 1;
-
-          fetch(`http://localhost:3000/api/v1/gamesproblems`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              game_id: num,
-              problem_id: problem.id,
-              answer: newGame.answers[answerCount]
-            })
-          });
-          answerCount++;
-        });
+        console.log(res);
       });
   };
 
