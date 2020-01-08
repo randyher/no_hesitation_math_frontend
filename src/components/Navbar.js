@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default class Navbar extends React.Component {
   render() {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             No Hesitation
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -26,45 +27,45 @@ export default class Navbar extends React.Component {
             <ul className="navbar-nav mr-auto">
               {this.props.auth ? (
                 <li className="nav-item active">
-                  <a className="nav-link" href="/profile">
+                  <Link className="nav-link" to="/profile">
                     Profile
-                  </a>
+                  </Link>
                 </li>
               ) : null}
 
               {this.props.auth ? (
                 <li className="nav-item active">
-                  <a className="nav-link" href="/stats">
+                  <Link className="nav-link" to="/stats">
                     Stats
-                  </a>
+                  </Link>
                 </li>
               ) : null}
 
               <li className="nav-item active">
-                <a className="nav-link" href="/start">
+                <Link className="nav-link" to="/start">
                   Start
-                </a>
+                </Link>
               </li>
             </ul>
             {/* the links should follow the order of the above link!*/}
 
             {this.props.auth ? (
-              <a
+              <Link
                 className="btn btn-outline-danger"
-                href="/"
+                to="/"
                 onClick={this.props.logOut}
               >
                 Log Out
-              </a>
+              </Link>
             ) : (
               <div>
-                <a className="btn btn-outline-primary" href="/login">
+                <Link className="btn btn-outline-primary" to="/login">
                   Log In
-                </a>
+                </Link>
 
-                <a className="btn btn-outline-success" href="/signup">
+                <Link className="btn btn-outline-success" to="/signup">
                   Sign Up
-                </a>
+                </Link>
               </div>
             )}
           </div>
