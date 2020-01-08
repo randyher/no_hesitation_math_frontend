@@ -104,22 +104,20 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
-  handleLogOut = () => {
-    console.log("Out");
-    fetch(`http://localhost:3000/api/v1/logout`, {
-      method: "DELETE",
-      headers: {
-        token: Auth.getToken(),
-        Authorization: `Token ${Auth.getToken()}`
-      }
-    })
-      .then(res => {
-        Auth.deauthenticateToken();
-        this.setState({
-          auth: Auth.isUserAuthenticated()
-        });
+  handleLogOut = async () => {
+    this.setState({ auth: false }, () => {
+      fetch(`http://localhost:3000/api/v1/logout`, {
+        method: "DELETE",
+        headers: {
+          token: Auth.getToken(),
+          Authorization: `Token ${Auth.getToken()}`
+        }
       })
-      .catch(err => console.log(err));
+        .then(res => {
+          Auth.deauthenticateToken();
+        })
+        .catch(err => console.log(err));
+    });
   };
 
   addGame = newGame => {
