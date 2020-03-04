@@ -156,7 +156,7 @@ class App extends Component {
     };
     console.log(this.state);
     console.log(newGame);
-    fetch(`http://localhost:3000/games`, {
+    fetch(`https://native-nhm-api.herokuapp.com/games`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
