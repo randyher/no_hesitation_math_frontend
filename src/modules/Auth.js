@@ -1,18 +1,18 @@
 class Auth {
   static authenticateToken(token) {
-    sessionStorage.setItem("token", token);
+    localStorage.setItem("token", token);
   }
 
   static isUserAuthenticated() {
-    return sessionStorage.getItem("token") !== null;
+    return localStorage.getItem("token") !== null;
   }
 
   static deauthenticateToken() {
-    return sessionStorage.removeItem("token");
+    return localStorage.removeItem("token");
   }
 
   static getToken() {
-    return sessionStorage.getItem("token");
+    return localStorage.getItem("token");
   }
 }
 

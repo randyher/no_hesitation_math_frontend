@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   getData = () => {
-    fetch("http://localhost:3000/api/v1/problems")
+    fetch("http://localhost:3000/problems")
       .then(res => res.json())
       .then(probs => {
         this.setState({
@@ -40,7 +40,7 @@ class App extends Component {
       });
 
     if (this.state.auth === true) {
-      fetch("http://localhost:3000/api/v1/profile", {
+      fetch("http://localhost:3000/profile", {
         method: "GET",
         headers: {
           token: Auth.getToken(),
@@ -82,21 +82,28 @@ class App extends Component {
   handleLoginSubmit = (e, info) => {
     e.preventDefault();
     console.log(info);
+    const userData = {
+      user: {
+        username: info.username,
+        password: info.password
+      }
+    };
 
-    fetch(`http://localhost:3000/api/v1/login`, {
+    fetch(`http://localhost:3000/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(info)
+      body: JSON.stringify(userData)
     })
       .then(res => res.json())
       .then(res => {
-        if (res.token === undefined) {
+        console.log(res);
+        if (res.jwt === undefined) {
           return <Redirect to="/login" />;
         }
 
-        Auth.authenticateToken(res.token);
+        Auth.authenticateToken(res.jwt);
         this.setState({
           auth: Auth.isUserAuthenticated()
         });
@@ -252,9 +259,11 @@ class App extends Component {
   // };
 
   render() {
+    console.log(this.state);
     const numberSentences = [];
     this.state.filteredProblems.forEach(problem => {
-      //here I will put if problem.grade === currentGrade
+      // here I will put
+      // if problem.grade === currentGrade
       numberSentences.push(problem.number_sentence);
     });
 
