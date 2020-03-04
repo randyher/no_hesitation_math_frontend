@@ -64,7 +64,6 @@ class App extends Component {
 
   handleRegisterSubmit = (e, info) => {
     e.preventDefault();
-    console.log(info);
 
     fetch(`https://native-nhm-api.herokuapp.com/users`, {
       method: "POST",
@@ -94,7 +93,7 @@ class App extends Component {
 
   handleLoginSubmit = (e, info) => {
     e.preventDefault();
-    console.log(info);
+
     const userData = {
       user: {
         username: info.username,
@@ -154,8 +153,7 @@ class App extends Component {
       ...newGame,
       user_id: this.state.id
     };
-    console.log(this.state);
-    console.log(newGame);
+
     fetch(`https://native-nhm-api.herokuapp.com/games`, {
       method: "POST",
       headers: {
@@ -280,7 +278,6 @@ class App extends Component {
   // };
 
   render() {
-    console.log(this.state);
     const numberSentences = [];
     this.state.filteredProblems.forEach(problem => {
       // here I will put
