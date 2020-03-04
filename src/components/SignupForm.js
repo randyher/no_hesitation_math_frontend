@@ -16,13 +16,17 @@ class SignUp extends React.Component {
   };
 
   render() {
+    const errors = this.props.errors.map(error => {
+      return <p style={{ color: "red" }}> {error} </p>;
+    });
     return (
       <div className="signupPage">
         <br />
         <h1>Sign Up</h1>
 
         <br />
-
+        {this.props.errors.length > 0 && errors}
+        <br />
         <form
           className="ui form"
           onSubmit={e => this.props.handleSubmit(e, this.state)}

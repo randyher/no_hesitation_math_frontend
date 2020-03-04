@@ -41,11 +41,13 @@ export default class Navbar extends React.Component {
                 </li>
               ) : null}
 
-              <li className="nav-item active">
-                <Link className="nav-link" to="/start">
-                  Start
-                </Link>
-              </li>
+              {this.props.auth ? (
+                <li className="nav-item active">
+                  <Link className="nav-link" to="/start">
+                    Start
+                  </Link>
+                </li>
+              ) : null}
             </ul>
             {/* the links should follow the order of the above link!*/}
 

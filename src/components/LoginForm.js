@@ -18,7 +18,8 @@ class LogIn extends React.Component {
       <div className="loginPage">
         <br />
         <h1>Log In</h1>
-
+        <br />
+        {this.props.error && <p style={{ color: "red" }}>{this.props.error}</p>}
         <br />
 
         <form
@@ -48,6 +49,7 @@ class LogIn extends React.Component {
           <br />
 
           <input className="ui button" type="submit" value="Log In!" />
+          <br />
         </form>
       </div>
     );

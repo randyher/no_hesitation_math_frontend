@@ -23,7 +23,9 @@ class App extends Component {
     subtractionOnly: false,
     doubleAndHalf: false,
     tensOnly: false,
-    id: 0
+    id: 0,
+    inError: "",
+    upError: []
   };
 
   componentDidMount() {
@@ -31,7 +33,7 @@ class App extends Component {
   }
 
   getData = () => {
-    fetch("http://localhost:3000/problems")
+    fetch("https://native-nhm-api.herokuapp.com/problems")
       .then(res => res.json())
       .then(probs => {
         this.setState({
@@ -41,7 +43,7 @@ class App extends Component {
       });
 
     if (this.state.auth === true) {
-      fetch("http://localhost:3000/profile", {
+      fetch("https://native-nhm-api.herokuapp.com/profile", {
         method: "GET",
         headers: {
           token: Auth.getToken(),
@@ -64,7 +66,7 @@ class App extends Component {
     e.preventDefault();
     console.log(info);
 
-    fetch(`http://localhost:3000/users`, {
+    fetch(`https://native-nhm-api.herokuapp.com/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -73,13 +75,19 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        Auth.authenticateToken(res.jwt);
-        this.setState({
-          username: res.user.username,
-          currentGrade: res.user.grade,
-          games: res.user_games,
-          auth: Auth.isUserAuthenticated()
-        });
+        if (res.error) {
+          this.setState({ upError: res.error });
+        } else {
+          Auth.authenticateToken(res.jwt);
+          this.setState({
+            username: res.user.username,
+            currentGrade: res.user.grade,
+            games: res.user_games,
+            auth: Auth.isUserAuthenticated(),
+            inError: "",
+            upError: []
+          });
+        }
         //ErrorCatch-- later!
       });
   };
@@ -94,7 +102,7 @@ class App extends Component {
       }
     };
 
-    fetch(`http://localhost:3000/login`, {
+    fetch(`https://native-nhm-api.herokuapp.com/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -103,20 +111,21 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
-        if (res.jwt === undefined) {
-          return <Redirect to="/login" />;
+        if (res.message) {
+          console.log(res);
+          this.setState({ inError: res.message });
+        } else {
+          Auth.authenticateToken(res.jwt);
+          this.setState({
+            username: res.user.username,
+            currentGrade: res.user.grade,
+            games: res.user_games,
+            auth: Auth.isUserAuthenticated(),
+            inError: "",
+            upError: []
+          });
         }
-
-        Auth.authenticateToken(res.jwt);
-        this.setState({
-          username: res.user.username,
-          currentGrade: res.user.grade,
-          games: res.user_games,
-          auth: Auth.isUserAuthenticated()
-        });
-      })
-      .catch(err => console.log(err));
+      });
   };
 
   handleLogOut = async () => {
@@ -162,7 +171,8 @@ class App extends Component {
           additionOnly: false,
           subtractionOnly: false,
           doubleAndHalf: false,
-          tensOnly: false
+          tensOnly: false,
+          inError: ""
         });
       });
   };
@@ -290,7 +300,10 @@ class App extends Component {
               this.state.auth ? (
                 <Redirect to="/" />
               ) : (
-                <LogIn handleSubmit={this.handleLoginSubmit} />
+                <LogIn
+                  handleSubmit={this.handleLoginSubmit}
+                  error={this.state.inError}
+                />
               )
             }
           />
@@ -312,7 +325,10 @@ class App extends Component {
               this.state.auth ? (
                 <Redirect to="/" />
               ) : (
-                <SignUp handleSubmit={this.handleRegisterSubmit} />
+                <SignUp
+                  handleSubmit={this.handleRegisterSubmit}
+                  errors={this.state.upError}
+                />
               )
             }
           />
