@@ -47,7 +47,7 @@ class SignUp extends React.Component {
             />
           </div>
 
-          <select
+          {/* <select
             name="grade"
             className="gradeSelect"
             onChange={this.handleChange}
@@ -56,7 +56,7 @@ class SignUp extends React.Component {
             <option selected value="2nd">
               Grade 2
             </option>
-          </select>
+          </select> */}
 
           <br />
 

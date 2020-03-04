@@ -62,7 +62,7 @@ class App extends Component {
     e.preventDefault();
     console.log(info);
 
-    fetch(`http://localhost:3000/api/v1/users/`, {
+    fetch(`http://localhost:3000/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -105,6 +105,9 @@ class App extends Component {
 
         Auth.authenticateToken(res.jwt);
         this.setState({
+          username: res.user.username,
+          currentGrade: res.user.grade,
+          games: res.user_games,
           auth: Auth.isUserAuthenticated()
         });
       })
@@ -112,19 +115,12 @@ class App extends Component {
   };
 
   handleLogOut = async () => {
-    this.setState({ auth: false }, () => {
-      fetch(`http://localhost:3000/api/v1/logout`, {
-        method: "DELETE",
-        headers: {
-          token: Auth.getToken(),
-          Authorization: `Token ${Auth.getToken()}`
-        }
-      })
-        .then(res => {
-          Auth.deauthenticateToken();
-        })
-        .catch(err => console.log(err));
-    });
+    this.setState(
+      { auth: false, username: "", currentGrade: "", games: "" },
+      () => {
+        Auth.deauthenticateToken();
+      }
+    );
   };
 
   addGame = newGame => {
