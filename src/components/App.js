@@ -22,7 +22,8 @@ class App extends Component {
     additionOnly: false,
     subtractionOnly: false,
     doubleAndHalf: false,
-    tensOnly: false
+    tensOnly: false,
+    id: 0
   };
 
   componentDidMount() {
@@ -52,7 +53,8 @@ class App extends Component {
           this.setState({
             username: res.user.username,
             currentGrade: res.user.grade,
-            games: res.games
+            games: res.games,
+            id: res.user.id
           });
         });
     }
@@ -71,8 +73,11 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        Auth.authenticateToken(res.token);
+        Auth.authenticateToken(res.jwt);
         this.setState({
+          username: res.user.username,
+          currentGrade: res.user.grade,
+          games: res.user_games,
           auth: Auth.isUserAuthenticated()
         });
         //ErrorCatch-- later!
@@ -136,19 +141,29 @@ class App extends Component {
       newGame["game_type"] = "All";
     }
 
+    const gameDataWithUser = {
+      ...newGame,
+      user_id: this.state.id
+    };
+    console.log(this.state);
     console.log(newGame);
-    fetch(`http://localhost:3000/api/v1/games`, {
+    fetch(`http://localhost:3000/games`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       },
-      body: JSON.stringify(newGame)
+      body: JSON.stringify(gameDataWithUser)
     })
       .then(res => res.json())
-      .then(res => {
-        console.log(res);
+      .then(game => {
+        this.setState({
+          games: [...this.state.games, game],
+          additionOnly: false,
+          subtractionOnly: false,
+          doubleAndHalf: false,
+          tensOnly: false
+        });
       });
   };
 
