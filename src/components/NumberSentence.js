@@ -26,6 +26,10 @@ class NumberSentence extends React.Component {
     }, 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
+  }
+
   renderQuestions = () => {
     let inputFields = [];
     let i = 0;

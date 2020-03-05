@@ -11,7 +11,7 @@ import {
 
 class Stats extends React.Component {
   render() {
-    console.log(this.props.data);
+    console.log(this.props);
     let i = 0;
     let y = 0;
     let timeData = this.props.data.map(game => {
@@ -26,7 +26,9 @@ class Stats extends React.Component {
 
     return (
       <div>
-        {this.props.data.length > 0 ? (
+        {!this.props.username ? (
+          <Loading />
+        ) : this.props.data.length > 0 ? (
           <div>
             <div class="split left">
               <div class="centered">
@@ -68,7 +70,7 @@ class Stats extends React.Component {
             </div>
           </div>
         ) : (
-          <Loading />
+          <h1>You must complete a sheet first!</h1>
         )}
       </div>
     );

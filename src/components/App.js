@@ -84,7 +84,8 @@ class App extends Component {
             games: res.user_games,
             auth: Auth.isUserAuthenticated(),
             inError: "",
-            upError: []
+            upError: [],
+            id: res.user.id
           });
         }
         //ErrorCatch-- later!
@@ -111,7 +112,6 @@ class App extends Component {
       .then(res => res.json())
       .then(res => {
         if (res.message) {
-          console.log(res);
           this.setState({ inError: res.message });
         } else {
           Auth.authenticateToken(res.jwt);
@@ -121,7 +121,8 @@ class App extends Component {
             games: res.user_games,
             auth: Auth.isUserAuthenticated(),
             inError: "",
-            upError: []
+            upError: [],
+            id: res.user.id
           });
         }
       });
@@ -129,7 +130,7 @@ class App extends Component {
 
   handleLogOut = async () => {
     this.setState(
-      { auth: false, username: "", currentGrade: "", games: "" },
+      { auth: false, username: "", currentGrade: "", games: "", id: 0 },
       () => {
         Auth.deauthenticateToken();
       }
@@ -309,7 +310,10 @@ class App extends Component {
             render={() =>
               this.state.auth ? (
                 <div>
-                  <Stats data={this.state.games} />
+                  <Stats
+                    data={this.state.games}
+                    username={this.state.username}
+                  />
                 </div>
               ) : (
                 <Redirect to="/" />
